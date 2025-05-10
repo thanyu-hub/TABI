@@ -45,15 +45,12 @@ public class SimulatorRotator : MonoBehaviour
 
     private void UpdateRotation()
     {
-        // 掴んだ後にどれだけY方向に動かしたかを見る（ローカル空間でもOK）
         Vector3 delta = rotatorHandle.position - initialHandlePos;
-        float movementAlongZ = Vector3.Dot(delta, simulatorRoot.forward); // 手前/奥方向の動き
+        float movementAlongZ = Vector3.Dot(delta, simulatorRoot.forward);
 
-        // 回転角を決定（感度は適宜調整）
-        float rawAngle = movementAlongZ * 180f; // 例えば Z方向に1m動いたら180°
+        float rawAngle = movementAlongZ * 180f;
         float snappedAngle = Mathf.Round(rawAngle / 15f) * 15f;
 
-        // X軸だけ回転
         Quaternion xRot = Quaternion.AngleAxis(snappedAngle, Vector3.right);
         simulatorRoot.rotation = initialRotation * xRot;
     }

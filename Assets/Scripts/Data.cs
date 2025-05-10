@@ -43,15 +43,14 @@ public class Data : MonoBehaviour
         {
             blob.GetComponent<BlobGenerator>().SetPointsPerBlob(perGaussian);
         }
-        if (moonTog.isOn)
-        {
-            moon.GetComponent<MoonGenerator3D>().SetPointsPerBlob(perGaussian);
-        }
         if (anisoTog.isOn)
         {
             aniso.GetComponent<AnisotropicGenerator3D>().SetPointsPerBlob(perGaussian);
         }
-
+        if (moonTog.isOn)
+        {
+            moon.GetComponent<MoonGenerator3D>().SetPointsPerBlob(perGaussian);
+        }
     }
     void DeactivateAllAlgorithms()
     {
@@ -62,18 +61,14 @@ public class Data : MonoBehaviour
 
     public void Sample()
 {
-    // 1. まず全アルゴリズムを停止
     DeactivateAllAlgorithms();
 
-    // 2. UI 値を反映
     SyncUISliders();
 
-    // 3. トグルに応じて必ず点群を生成（ページに依存しない）
     if (blobTog.isOn)   GenerateBlob();
-    if (moonTog.isOn)   GenerateMoon();
     if (anisoTog.isOn)  GenerateAniso();
+    if (moonTog.isOn)   GenerateMoon();
 
-    // 4. ページに合わせて、該当アルゴリズムだけを有効化＆実行
     int page = bookManagerCanvas.GetComponent<BookManager>().currentPage;
     if (page == 0)
     {
